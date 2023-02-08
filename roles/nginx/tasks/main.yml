@@ -44,6 +44,11 @@
     group: root
     mode: "0644"
 
+- name: Create enabled sites directory
+  file:
+    path: /etc/nginx/sites-enabled
+    state: directory
+
 - name: Make NGINX redirect http to https
   copy:
     src: https_redirect.conf
