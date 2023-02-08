@@ -36,6 +36,14 @@
     mode: "0644"
   notify: Reload NGINX
 
+- name: Add TLS configuration template
+  template:
+    src: tls.conf.j2
+    dest: /etc/nginx/tls.conf
+    owner: root
+    group: root
+    mode: "0644"
+
 - name: Make NGINX redirect http to https
   copy:
     src: https_redirect.conf
@@ -60,4 +68,4 @@
 
 - name: Request certificates for domains
   shell:
-    cmd: certbot certonly -n --nginx -d {{ master_domain }} -d {{ other_domains }}
+    cmd: certbot certonly -n --nginx -d {{ master_domain }} -d {{ other_domains | join(",") }}

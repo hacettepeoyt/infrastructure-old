@@ -5,7 +5,28 @@
   gather_facts: false
   vars:
     master_domain: linux101.ozguryazilimhacettepe.com
-    other_domains: hucafetariabot.ozguryazilimhacettepe.com
+    other_domains:
+      - hucafetariabot.ozguryazilimhacettepe.com
+      - huannouncementbot.ozguryazilimhacettepe.com
   roles:
     - role: ufw
     - role: nginx
+  tasks:
+    - name: Install hucafetariabot's webhook configuration to NGINX
+      copy:
+        src: hucafetariabot_webhook.conf
+        dest: /etc/nginx/sites-available/hucafetariabot_webhook.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload NGINX
+
+    - name: Install huannouncementbot's webhook configuration to NGINX
+      copy:
+        src: huannouncementbot_webhook.conf
+        dest: /etc/nginx/sites-available/huannouncementbot_webhook.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload NGINX
+
