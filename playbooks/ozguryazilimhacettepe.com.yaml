@@ -1,0 +1,11 @@
+---
+- name: Setup ozguryazilimhacettepe.com
+  hosts: linux101.ozguryazilimhacettepe.com
+  remote_user: root
+  gather_facts: false
+  vars:
+    master_domain: linux101.ozguryazilimhacettepe.com
+    other_domains: hucafetariabot.ozguryazilimhacettepe.com
+  roles:
+    - role: ufw
+    - role: nginx

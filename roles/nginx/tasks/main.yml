@@ -1,0 +1,63 @@
+---
+- name: Upgrade system
+  pacman:
+    upgrade: True
+    update_cache: True
+
+- name: Install NGINX
+  pacman:
+    name: nginx
+    state: latest
+
+- name: Allow NGINX HTTP in ufw
+  ufw:
+    port: '80'
+    rule: allow
+    proto: tcp
+
+- name: Allow NGINX HTTPS in ufw
+  ufw:
+    port: '443'
+    rule: allow
+    proto: tcp
+
+- name: Start NGINX
+  service:
+    name: nginx
+    enabled: True
+    state: started
+
+- name: Configure NGINX
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload NGINX
+
+- name: Make NGINX redirect http to https
+  copy:
+    src: https_redirect.conf
+    dest: /etc/nginx/sites-enabled/https_redirect.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload NGINX
+
+- name: Install certbot
+  pacman:
+    name:
+      - certbot
+      - certbot-nginx
+    state: latest
+
+- name: Enable certbot renewal timer
+  service:
+    name: certbot-renew.timer
+    enabled: True
+    state: started
+
+- name: Request certificates for domains
+  shell:
+    cmd: certbot certonly -n --nginx -d {{ master_domain }} -d {{ other_domains }}

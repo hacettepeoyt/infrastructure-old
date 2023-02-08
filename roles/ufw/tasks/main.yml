@@ -1,0 +1,24 @@
+---
+- name: Update system
+  pacman:
+    upgrade: True
+    update_cache: True
+
+- name: Install ufw
+  pacman:
+    name: ufw
+    state: latest
+
+- name: Deny all traffic
+  ufw:
+    default: drop
+
+- name: Allow SSH
+  ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
+
+- name: Enable ufw
+  ufw:
+    state: enabled 
