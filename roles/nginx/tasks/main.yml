@@ -78,4 +78,4 @@
 
 - name: Request certificates for domains
   shell:
-    cmd: certbot certonly -n --nginx --expand -d {{ master_domain }} -d {{ other_domains | join(",") }}
+    cmd: certbot certonly -n --nginx --expand --agree-tos --email {{ letsencrypt_email }} -d {{ master_domain }} -d {{ other_domains | join(",") }}
