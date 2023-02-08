@@ -21,6 +21,11 @@
     rule: allow
     proto: tcp
 
+- name: Get mime.types for NGINX
+  get_url:
+    url: https://raw.githubusercontent.com/nginx/nginx/master/conf/mime.types
+    dest: /etc/nginx/mime.types
+
 - name: Start NGINX
   service:
     name: nginx
