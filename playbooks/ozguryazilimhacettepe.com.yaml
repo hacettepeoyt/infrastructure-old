@@ -9,6 +9,7 @@
     other_domains:
       - hucafetariabot.ozguryazilimhacettepe.com
       - huannouncementbot.ozguryazilimhacettepe.com
+      - wiki.ozguryazilimhacettepe.com
       - www.ozguryazilimhacettepe.com
   roles:
     - role: ufw
@@ -77,6 +78,15 @@
       copy:
         src: ozguryazilimhacettepe.com.conf
         dest: /etc/nginx/sites-enabled/ozguryazilimhacettepe.com.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload NGINX
+
+    - name: Configure NGINX to serve wiki
+      copy:
+        src: wiki.conf
+        dest: /etc/nginx/sites-enabled/wiki.conf
         owner: root
         group: root
         mode: "0644"
