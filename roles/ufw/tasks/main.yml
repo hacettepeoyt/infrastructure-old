@@ -1,13 +1,8 @@
 ---
-- name: Update system
-  pacman:
-    upgrade: True
-    update_cache: True
-
 - name: Install ufw
   pacman:
     name: ufw
-    state: latest
+    state: present
 
 - name: Deny all traffic
   ufw:

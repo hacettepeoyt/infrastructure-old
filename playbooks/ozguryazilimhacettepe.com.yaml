@@ -80,3 +80,15 @@
         group: root
         mode: "0644"
       notify: Reload NGINX
+
+    - name: Update system
+      pacman:
+        upgrade: True
+        update_cache: True
+      register: system_update
+
+    - name: Reboot system
+      reboot:
+        pre_reboot_delay: 60
+        msg: Rebooting system due to a system upgrade in a minute.
+      when: system_update.changed

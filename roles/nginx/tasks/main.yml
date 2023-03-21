@@ -1,13 +1,8 @@
 ---
-- name: Upgrade system
-  pacman:
-    upgrade: True
-    update_cache: True
-
 - name: Install NGINX
   pacman:
     name: nginx
-    state: latest
+    state: present
 
 - name: Allow NGINX HTTP in ufw
   ufw:
