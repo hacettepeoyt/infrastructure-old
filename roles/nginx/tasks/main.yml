@@ -76,6 +76,24 @@
     enabled: True
     state: started
 
+# Originally authored by https://github.com/geerlingguy/ansible-role-certbot/pull/117.
+- name: Get installed certs
+  shell: |
+    certbot certificates --cert-name={{ master_domain }} | grep "Domains:" | awk '{ gsub(/    Domains: /,""); print }'
+  changed_when: False
+  register: certbot_certs
+
+- name: Set needs_cert_update to False
+  set_fact:
+    needs_cert_update: False
+
+- name: Check if certificates require an update
+  set_fact:
+    needs_cert_update: True
+  when: ([master_domain] + other_domains) | sort | difference(item) != []
+  with_items: "{{ certbot_certs.stdout_lines }}"
+
 - name: Request certificates for domains
   shell:
     cmd: certbot certonly -n --nginx --expand --agree-tos --email {{ letsencrypt_email }} -d {{ master_domain }} -d {{ other_domains | join(",") }}
+  when: needs_cert_update
