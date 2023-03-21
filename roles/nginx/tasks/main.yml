@@ -1,7 +1,10 @@
 ---
-- name: Install NGINX
+- name: Install NGINX and certbot
   pacman:
-    name: nginx
+    name:
+      - nginx
+      - certbot
+      - certbot-nginx
     state: present
 
 - name: Allow NGINX HTTP in ufw
@@ -57,13 +60,6 @@
     group: root
     mode: "0644"
   notify: Reload NGINX
-
-- name: Install certbot
-  pacman:
-    name:
-      - certbot
-      - certbot-nginx
-    state: latest
 
 - name: Enable certbot renewal timer
   service:
