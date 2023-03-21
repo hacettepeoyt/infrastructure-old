@@ -9,6 +9,7 @@
     other_domains:
       - hucafetariabot.ozguryazilimhacettepe.com
       - huannouncementbot.ozguryazilimhacettepe.com
+      - www.ozguryazilimhacettepe.com
   roles:
     - role: ufw
     - role: nginx
