@@ -49,8 +49,8 @@
 
     - name: Download huoyt-website package
       get_url:
-        checksum: "sha256:21a5d328c9c974f1df82c288af8bc0358d9a28a0601849ada2928dbc6ab09bbb"
-        url: https://github.com/div72/PKGBUILDs/releases/download/release0/huoyt-website-1.0.2-1-any.pkg.tar.zst
+        checksum: "sha256:490e15f8740efaedf721e28484a92cd1076d80e8fcc2f9f4312a8447121ddcb5"
+        url: https://github.com/div72/PKGBUILDs/releases/download/release0/huoyt-website-1.1.0-1-any.pkg.tar.zst
         dest: /tmp/huoyt-website-1.0.2-1-any.pkg.tar.zst
       register: huoyt_website
 
