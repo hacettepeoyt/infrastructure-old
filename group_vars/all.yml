@@ -1,0 +1,21 @@
+oyt_groups:
+  - users
+  - wheel
+
+oyt_users:
+  div72:
+    name: "div72"
+    shell: /bin/zsh
+    ssh_key: div72.pub
+    groups:
+      - wheel
+  f1nch:
+    name: "f1nch"
+    ssh_key: f1nch.pub
+    groups:
+      - wheel
+  ikolomiko:
+    name: "ikolomiko"
+    ssh_key: ikolomiko.pub
+    groups:
+      - wheel

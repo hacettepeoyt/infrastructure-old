@@ -12,6 +12,7 @@
       - wiki.ozguryazilimhacettepe.com
       - www.ozguryazilimhacettepe.com
   roles:
+    - role: oytusers
     - role: ufw
     - role: nginx
     - role: monit
