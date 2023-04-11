@@ -1,0 +1,37 @@
+---
+- name: Install monit
+  pacman:
+    name: monit
+    state: present
+
+- name: Configure monit
+  copy:
+    src: monitrc
+    dest: /etc/monitrc
+    owner: root
+    group: root
+    mode: "0700"
+  notify: Reload monit
+
+- name: Start monit
+  service:
+    name: monit
+    enabled: True
+    state: started
+
+# In case monit is run before the nginx role.
+- name: Ensure NGINX sites-enabled directory exists
+  file:
+    state: directory
+    path: /etc/nginx/sites-enabled
+  when: "'nginx' in role_names"
+
+- name: Configure NGINX to also serve monit
+  template:
+    src: monit.conf
+    dest: /etc/nginx/sites-enabled/monit.conf
+    owner: root
+    group: root
+    mode: "0644"
+  when: "'nginx' in role_names"
+  notify: Reload NGINX

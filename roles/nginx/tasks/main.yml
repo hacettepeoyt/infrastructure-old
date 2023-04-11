@@ -78,6 +78,11 @@
   set_fact:
     needs_cert_update: False
 
+- name: Add monit to list of other domains
+  set_fact:
+    other_domains: "{{ other_domains + [ 'monit.{{ master_domain }}'] }}"
+  when: "'monit' in role_names"
+
 - name: Check if certificates require an update
   set_fact:
     needs_cert_update: True
